@@ -1,4 +1,5 @@
 import React from 'react';
+import { focusStatus, color } from '../lib/tokens.js';
 
 export default function StudentTile({ studentId, name, vitals, lastUpdated, onOpenVerification }) {
   const initials = name
@@ -8,26 +9,7 @@ export default function StudentTile({ studentId, name, vitals, lastUpdated, onOp
     .toUpperCase()
     .slice(0, 2);
 
-  const now = Date.now();
-  const stale = !vitals || now - lastUpdated > 10000;
-
-  let status, statusColor;
-  if (stale) {
-    status = 'Waiting';
-    statusColor = '#8888aa';
-  } else if (!vitals.faceDetected) {
-    status = 'Check camera';
-    statusColor = '#f5a623';
-  } else if (vitals.focusScore >= 0.7) {
-    status = 'Engaged';
-    statusColor = '#3ddc97';
-  } else if (vitals.focusScore >= 0.4) {
-    status = 'Cognitive load';
-    statusColor = '#f5a623';
-  } else {
-    status = 'Disengaged';
-    statusColor = '#ff5c7a';
-  }
+  const { key: statusKey, color: statusColor, label: status } = focusStatus(vitals, lastUpdated);
 
   const focusPct = vitals && vitals.focusScore != null ? Math.round(vitals.focusScore * 100) : 0;
   const samples = vitals && vitals._sparkline ? vitals._sparkline : [];
@@ -43,14 +25,14 @@ export default function StudentTile({ studentId, name, vitals, lastUpdated, onOp
         <div className="avatar">{initials}</div>
         <div className="tile-info">
           <div className="tile-name">{name}</div>
-          <span className={`status-pill ${statusColor}`}>{status}</span>
+          <span className={`status-pill ${statusKey}`}>{status}</span>
         </div>
       </div>
 
       <div className="tile-focus">
         <span className="focus-big" style={{ color: statusColor }}>{focusPct}%</span>
         <svg className="sparkline" viewBox="0 0 100 24" fill="none">
-          <polyline points={points} stroke="#7b5cff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <polyline points={points} stroke={color.brand.primary} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useStore } from '../store.js';
 import { useNavigate } from 'react-router-dom';
-import { io } from 'socket.io-client';
+import { socket } from '../lib/socket.js';
 
 import {
   SmartSpectraSDK,
@@ -27,10 +27,14 @@ export default function StudentSession() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const sdkRef = useRef(null);
-  const socketRef = useRef(null);
   const emitIntervalRef = useRef(null);
   const latestPulseRef = useRef(null);
   const latestBreathingRef = useRef(null);
+
+  // Client-side userId for students (server doesn't issue one on student login)
+  const userIdRef = useRef(
+    'student_' + Math.random().toString(36).slice(2, 10)
+  );
 
   // --- SDK lifecycle: runs once after consent ---
   useEffect(() => {
@@ -99,18 +103,24 @@ export default function StudentSession() {
   useEffect(() => {
     if (!consentGiven) return;
 
-    socketRef.current = io('http://localhost:3001');
-    socketRef.current.on('connect', () => setSocketConnected(true));
-    socketRef.current.on('disconnect', () => setSocketConnected(false));
-    if (roomCode) socketRef.current.emit('join-room', roomCode);
+    socket.on('connect', () => setSocketConnected(true));
+    socket.on('disconnect', () => setSocketConnected(false));
+    if (roomCode) {
+      socket.emit('join-room', {
+        roomCode,
+        userId: userIdRef.current,
+        role: userRole,
+      });
+    }
 
     return () => {
-      if (socketRef.current) {
-        socketRef.current.disconnect();
-        socketRef.current = null;
+      socket.off('connect', () => setSocketConnected(true));
+      socket.off('disconnect', () => setSocketConnected(false));
+      if (roomCode) {
+        socket.emit('leave-room', { roomCode });
       }
     };
-  }, [consentGiven, roomCode]);
+  }, [consentGiven, roomCode, userRole]);
 
   // --- Vitals emit interval: 2 seconds ---
   useEffect(() => {
@@ -118,15 +128,24 @@ export default function StudentSession() {
 
     emitIntervalRef.current = setInterval(() => {
       if (
-        socketRef.current &&
+        socket.connected &&
         latestPulseRef.current != null &&
         roomCode
       ) {
-        socketRef.current.emit('send-vitals', {
+        socket.emit('send-vitals', {
           roomCode,
-          pulse: latestPulseRef.current,
-          breathingRate: latestBreathingRef.current,
-          role: userRole,
+          userId: userIdRef.current,
+          vitals: {
+            pulse: latestPulseRef.current,
+            breathingRate: latestBreathingRef.current,
+            blinkRate: null,
+            talking: false,
+            facialExpression: 'neutral',
+            focusScore: latestPulseRef.current
+              ? Math.min(1, latestPulseRef.current / 100)
+              : 0,
+            faceDetected: true,
+          },
         });
       }
     }, 2000);
@@ -140,6 +159,7 @@ export default function StudentSession() {
 
   const handleLogout = () => {
     clearStore();
+    socket.disconnect();
     navigate('/');
   };
 

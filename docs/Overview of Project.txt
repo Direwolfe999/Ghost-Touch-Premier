@@ -122,3 +122,30 @@ Run `npm run start`. If you see a dark screen with the text "Auth Screen", you h
 
 **Once you confirm the shell works, tell me.** 
 Tomorrow, we build the **Auth Screen UI** (the RoleCards) and the **Tutor Dashboard UI**. We take it one step at a time, ensuring every screen matches the Ghost Touch premium quality. Let's go.
+
+What I still need from you
+The manifest gives us the accent and background, but not the full system. To replicate the app faithfully, send me the directory tree and these files from the Flutter project:
+
+lib/main.dart (or lib/app.dart) — where ThemeData is defined.
+
+Anything under lib/core/theme/ or lib/theme/ — colors, typography, spacing, component themes.
+
+pubspec.yaml — fonts and assets (this tells us the type system).
+
+lib/screens/ or lib/features/ tree — screen names and folder structure.
+
+One or two representative screens (e.g., the dashboard or tutor screen) — so I can see component patterns, card styles, and layout logic.
+
+With those, I can extract a design token file (colors, type scale, radii, spacing) that both the Flutter app and the Electron/React Premier build can share.
+
+How to build “like a full team” as one person
+A full team doesn’t mean more code—it means more artifacts that force consistency. For this project, simulate four roles with four lightweight deliverables:
+
+Role	What they produce	Why it matters
+Design lead	tokens.json + DESIGN.md (colors, type, spacing, component states)	Single source of truth. Every screen references tokens, not hex codes.
+Frontend lead	Component library (Card, StatusPill, Metric, Button) + Storybook-style preview page	You stop rebuilding the same UI per screen.
+Backend lead	API + socket contract doc (API.md)	Frontend and backend never drift.
+QA / integration	A demo script + acceptance checklist per screen	Catches “half-feature” gaps before judges do.
+The workflow is spec → tokens → components → screens → integration test. You write the token file once, the component library once, then every screen is assembly—not invention.
+
+For a hackathon timeline, spend the first 2 hours on tokens and components, not screens. It feels slower, but it’s the difference between a demo that looks coherent and one that looks stitched together.

@@ -4,6 +4,8 @@ import AuthScreen from './screens/AuthScreen.jsx';
 import TutorDashboard from './screens/TutorDashboard.jsx';
 import StudentJoin from './screens/StudentJoin.jsx';
 import StudentSession from './screens/StudentSession.jsx';
+import MoreScreen from './screens/MoreScreen.jsx';
+import BottomTabShell from './components/shell/BottomTabShell.jsx';
 import { useStore } from './store.js';
 
 function ProtectedRoute({ role, children }) {
@@ -16,33 +18,36 @@ function ProtectedRoute({ role, children }) {
 export default function App() {
   return (
     <HashRouter>
-      <Routes>
-        <Route path="/" element={<AuthScreen />} />
-        <Route
-          path="/tutor/dashboard"
-          element={
-            <ProtectedRoute role="tutor">
-              <TutorDashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/student/join"
-          element={
-            <ProtectedRoute role="student">
-              <StudentJoin />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/student/session"
-          element={
-            <ProtectedRoute role="student">
-              <StudentSession />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
+      <BottomTabShell>
+        <Routes>
+          <Route path="/" element={<AuthScreen />} />
+          <Route
+            path="/tutor/dashboard"
+            element={
+              <ProtectedRoute role="tutor">
+                <TutorDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/student/join"
+            element={
+              <ProtectedRoute role="student">
+                <StudentJoin />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/student/session"
+            element={
+              <ProtectedRoute role="student">
+                <StudentSession />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/more" element={<MoreScreen />} />
+        </Routes>
+      </BottomTabShell>
     </HashRouter>
   );
 }

@@ -1,0 +1,69 @@
+﻿:root {
+  /* Backgrounds */
+  --gt-bg-base: #0A0A0A;
+  --gt-bg-deep: #121212;
+  --gt-bg-pure: #000000;
+
+  /* Surfaces */
+  --gt-surface-card: #1C1C1E;
+  --gt-surface-mid:  #2C2C2E;
+  --gt-surface-high: #3A3A3C;
+  --gt-surface-glass: #F5F5F7;
+
+  /* Brand */
+  --gt-brand-primary: #007AFF;
+  --gt-brand-mint:    #00C7BE;
+  --gt-brand-cyan:    #00E5FF;
+  --gt-brand-violet:  #8A2BE2;
+
+  /* Premium tiers */
+  --gt-premium-gold:    #D4AF37;
+  --gt-premium-founder: #FFD700;
+
+  /* Text */
+  --gt-text-primary:    #FFFFFF;
+  --gt-text-secondary:  #8E8E93;
+  --gt-text-tertiary:   #636366;
+  --gt-text-quaternary: #494949;
+  --gt-text-inverse:    #121212;
+
+  /* Status */
+  --gt-status-success: #34C759;
+  --gt-status-warning: #FF9500;
+  --gt-status-error:   #FF3B30;
+  --gt-status-live:    #FF0000;
+
+  /* Gradients */
+  --gt-grad-brand:      linear-gradient(135deg, #007AFF 0%, #00C7BE 100%);
+  --gt-grad-neon:       linear-gradient(135deg, #00E5FF 0%, #8A2BE2 100%);
+  --gt-grad-elite:      linear-gradient(135deg, #D4AF37 0%, #00C7BE 100%);
+  --gt-grad-mesh:       linear-gradient(135deg, rgba(0,122,255,0.10), rgba(0,199,190,0.10));
+  --gt-grad-onboarding: linear-gradient(135deg, #0D47A1 0%, #1A237E 50%, #4A148C 100%);
+
+  /* Radius */
+  --gt-r-xs: 4px;  --gt-r-sm: 8px;  --gt-r-md: 12px;
+  --gt-r-lg: 16px; --gt-r-xl: 20px; --gt-r-2xl: 24px;
+  --gt-r-pill: 999px; --gt-r-input: 15px;
+
+  /* Spacing */
+  --gt-s-xs: 4px;  --gt-s-sm: 8px;  --gt-s-md: 12px;
+  --gt-s-lg: 16px; --gt-s-xl: 20px; --gt-s-2xl: 24px;
+  --gt-s-3xl: 32px; --gt-s-4xl: 40px;
+
+  /* Glass */
+  --gt-glass-fill:   rgba(245,245,247,0.08);
+  --gt-glass-border: rgba(245,245,247,0.12);
+  --gt-glass-blur:   4px;
+  --gt-glass-shadow: 0 10px 20px -5px rgba(0,0,0,0.10);
+
+  /* Type */
+  --gt-font: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --gt-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Motion */
+  --gt-motion-fast: 150ms;
+  --gt-motion-base: 300ms;
+  --gt-motion-slow: 600ms;
+  --gt-motion-pulse: 1500ms;
+  --gt-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
