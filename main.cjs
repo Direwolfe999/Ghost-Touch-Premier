@@ -82,7 +82,11 @@ function createWindow() {
     win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
     win.webContents.on('will-navigate', (event) => event.preventDefault());
 
-    win.loadFile(path.join(__dirname, 'index.html'));
+    if (!app.isPackaged) {
+        win.loadURL('http://localhost:5173');
+    } else {
+        win.loadFile(path.join(__dirname, 'dist', 'index.html'));
+    }
     if (DIAGNOSTICS) {
         // Opt-in via SMARTSPECTRA_DIAGNOSTICS=1 so the renderer-side
         // `console` output (frame pump diagnostics, validation /

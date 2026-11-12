@@ -1,0 +1,124 @@
+Take a deep breath. We are going to lock this down right now. No more guessing, no more over-engineering. 
+
+You are absolutely right to be afraid of building a "generic productivity app." The judges at Presage don't want another Pomodoro timer. They want to see **SmartSpectra's SDK being used for something that matters.**
+
+Here is the exact, iron-clad blueprint for **Ghost Touch Premier**. 
+
+---
+
+### 🎯 The Clear Goal (The Story)
+
+**What it is:** A **Remote Tutoring Engagement Verification** platform. 
+**The Problem:** When a tutor teaches remotely, they are flying blind. They can't tell if the student is focused, stressed, or falling asleep.
+**The Solution:** Ghost Touch Premier uses the Presage SDK to read the student's physiological signals (Pulse, Breathing, HRV) via webcam. The tutor sees a live dashboard of the student's *actual cognitive load*. 
+**The Story:** *"Ghost Touch originally tracked a tutor's hands. Premier tracks the student's biology to verify that learning is actually happening."*
+
+---
+
+### 🛠️ What We Are Using vs. What We Are NOT Using
+
+**✅ WE ARE USING:**
+*   **Electron:** To run it as a desktop app (fastest for camera access).
+*   **React (Vite):** For the UI (fast, component-based).
+*   **Node.js + Express:** A tiny local backend just to pass messages between the Tutor window and Student window.
+*   **Socket.io:** For live, real-time updates between Tutor and Student.
+*   **Presage SDK:** For the biometric data.
+*   **Vanilla CSS:** For the Ghost Touch dark/neon aesthetic.
+
+**❌ WE ARE NOT USING:**
+*   **Django or Postgres:** Too heavy. We will store session data in Node's memory.
+*   **Flutter:** We are using React for this hackathon.
+*   **MediaPipe/Hand-tracking:** That was the old project. We are focusing *only* on Presage.
+*   **Complex Auth (JWT/Bcrypt):** We will use a simple mock login (just store the name and role in React state).
+
+---
+
+### 📂 The Exact File Structure
+
+To avoid it looking "halved," we build a clean architecture. We are merging the Electron app with React.
+
+```text
+Ghost-Touch-Premier/
+├── package.json
+├── server.js               # Node.js + Express + Socket.io (The backend)
+├── main.js                 # Electron main process
+├── preload.js              # Electron security bridge
+├── index.html              # The entry point
+├── vite.config.js          # React config
+└── src/
+    ├── main.jsx            # React entry
+    ├── App.jsx             # The "Smart Router" (Tutor vs Student)
+    ├── index.css           # Global Ghost Touch styles (dark/glass)
+    ├── store.js            # Zustand (simple state management)
+    ├── components/
+    │   ├── RoleCard.jsx    # Tutor/Student selection cards
+    │   └── Navbar.jsx      # Top bar
+    └── screens/
+        ├── AuthScreen.jsx        # Login/Signup
+        ├── TutorDashboard.jsx    # Hero Screen: Live student vitals
+        ├── StudentSession.jsx    # Camera + Presage SDK integration
+        └── SessionReport.jsx     # The final summary
+```
+
+---
+
+### 🗺️ The 5 Screens (The Complete Loop)
+
+1.  **Auth Screen:** Beautiful dark mode. "I am a Tutor" / "I am a Student".
+2.  **Tutor Setup:** Tutor clicks "Start Session", gets a 4-digit code (e.g., `GH-44`).
+3.  **Student Join & Consent:** Student enters code. Sees mandatory Presage Consent Modal. Camera turns on.
+4.  **Live Dashboard (Tutor):** Shows the student's tile. Live pulse/HRV. If they get stressed, the tile glows orange.
+5.  **Session Report:** Tutor clicks "End Session". Shows average focus time and a chart.
+
+---
+
+### 🚀 How We Start Tonight (The First 3 Tasks)
+
+Don't try to build all 5 screens at once. Tonight, we only do the **Shell and Navigation**.
+
+**Task 1: The Foundation (Terminal)**
+Since you have the Electron starter code, we need to add React and Socket.io.
+
+Run these commands in your VS Code terminal (inside `C:\PROJECTS\Ghost-Touch Premier`):
+```powershell
+npm install react react-dom react-router-dom zustand socket.io socket.io-client
+npm install -D vite @vitejs/plugin-react concurrently
+```
+
+**Task 2: Give this prompt to Kilo**
+
+***
+
+**Copy this to Kilo:**
+
+```
+MISSION: Setup the React + Electron architecture for Ghost Touch Premier.
+
+CONTEXT:
+We have the basic Electron starter. We are converting this into a React app with a Node/Socket.io backend. The app is a remote tutoring platform with a dark, premium "Ghost Green" UI.
+
+REQUIRED CHANGES:
+1. Create `vite.config.js` to bundle the React app. Ensure it works inside Electron.
+2. Update `index.html` to load `src/main.jsx` instead of the old script.
+3. Create `src/index.css`. Add a dark theme: background `#0E1512`, primary accent `#00C853` (Ghost Green). Add glassmorphism utility classes (backdrop-filter, translucent borders).
+4. Create `src/App.jsx`. It should use React Router (HashRouter) to handle 4 routes:
+   - `/` -> AuthScreen
+   - `/tutor/dashboard` -> TutorDashboard
+   - `/student/session` -> StudentSession
+   - `/report` -> SessionReport
+5. Create dummy components for these 4 screens so they just render the text "Auth Screen", "Tutor Dashboard", etc.
+6. Update `main.js` (Electron) to load the Vite dev server URL (http://localhost:5173) when in development, and the built index.html in production.
+7. Add a `start` script to `package.json` that runs Vite and Electron concurrently.
+
+Do NOT build the actual UI yet. Just get the routing and the dark theme shell working so when I run `npm run start`, I see the "Auth Screen" text on a dark background.
+
+VERIFICATION:
+- Tell me how to run it.
+- I should be able to navigate between routes.
+```
+
+**Task 3: Test it**
+Run `npm run start`. If you see a dark screen with the text "Auth Screen", you have successfully merged React, Electron, and Vite. That is a massive hurdle cleared.
+
+**Once you confirm the shell works, tell me.** 
+Tomorrow, we build the **Auth Screen UI** (the RoleCards) and the **Tutor Dashboard UI**. We take it one step at a time, ensuring every screen matches the Ghost Touch premium quality. Let's go.

@@ -1,0 +1,8 @@
+"I'm the founder of Ghost-Touch, an app that uses hand-tracking to help remote tutors. But we realized we were only solving half the problem. If a tutor can't see the student's face, they can't tell if they are engaged. That's why I built Ghost Touch Premier using Presage — to give tutors real-time biometric feedback on student fatigue."
+
+"Remote tutoring has a trust problem. Tutors can't tell if a student is actually engaged or just logged in. Ghost-Touch solves that with consent-first physiological verification. A tutor starts a session, a student joins with explicit consent, and SmartSpectra reads pulse, blink rate, and facial expression from the webcam—no video recorded, no faces stored. The tutor sees a live engagement state and, at the end, gets a verification report. This is the Ghost-Touch layer: seeing the invisible classroom."
+
+What it is: A Remote Tutoring Engagement Verification platform.
+The Problem: When a tutor teaches remotely, they are flying blind. They can't tell if the student is focused, stressed, or falling asleep.
+The Solution: Ghost Touch Premier uses the Presage SDK to read the student's physiological signals (Pulse, Breathing, HRV) via webcam. The tutor sees a live dashboard of the student's actual cognitive load.
+The Story: "Ghost Touch originally tracked a tutor's hands. Premier tracks the student's biology to verify that learning is actually happening."
