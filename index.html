@@ -4,10 +4,83 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ghost Touch Premier</title>
-    <link rel="stylesheet" href="/src/index.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <div id="error-banner" class="glass-card hidden" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; width: 90%; max-width: 500px; padding: 16px 20px; background: rgba(255, 50, 50, 0.1); border: 1px solid rgba(255, 50, 50, 0.5);">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong id="error-code" style="color: #ff6b6b;">Error</strong>
+            <span id="error-message" style="color: #fff; font-size: 14px;"></span>
+        </div>
+    </div>
+
+    <div class="student-layout">
+        <div class="video-panel">
+            <div class="video-card glass-card">
+                <video id="preview" autoplay playsinline muted></video>
+                <div class="video-overlay">
+                    <span id="status-badge">Idle</span>
+                </div>
+            </div>
+        </div>
+        <div class="vitals-panel">
+            <div class="vitals-card glass-card">
+                <h3>Breathing</h3>
+                <div class="vitals-grid">
+                    <div class="vital-item">
+                        <span class="vital-label">Rate</span>
+                        <span class="vital-value"><span id="readout-breathing">—</span> <span class="vital-unit">BR/min</span></span>
+                    </div>
+                    <div class="vital-item">
+                        <span class="vital-label">Status</span>
+                        <span id="validation" class="hint hint-ok">—</span>
+                    </div>
+                </div>
+            </div>
+            <div class="vitals-card glass-card">
+                <h3>Cardio</h3>
+                <div class="vitals-grid">
+                    <div class="vital-item">
+                        <span class="vital-label">Pulse</span>
+                        <span class="vital-value"><span id="readout-pulse">—</span> <span class="vital-unit">BPM</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 100;">
+        <button id="btn-start" class="btn-primary">Start</button>
+        <button id="btn-stop" class="btn-primary" disabled>Stop</button>
+        <button id="btn-reset" class="btn-primary" disabled>Reset</button>
+    </div>
+
+    <div style="position: fixed; bottom: 20px; right: 20px; display: flex; gap: 12px; z-index: 100;">
+        <label class="vital-item" style="cursor: pointer;">
+            <span class="vital-label">Cardio</span>
+            <input type="checkbox" id="m-cardio" style="margin-left: 8px;">
+        </label>
+        <label class="vital-item" style="cursor: pointer;">
+            <span class="vital-label">Face</span>
+            <input type="checkbox" id="m-face" style="margin-left: 8px;">
+        </label>
+    </div>
+
+    <div style="position: fixed; bottom: 120px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1100px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; z-index: 50;">
+        <div class="glass-card" style="padding: 12px;">
+            <canvas id="chart-breathing-rate"></canvas>
+        </div>
+        <div class="glass-card" style="padding: 12px;">
+            <canvas id="chart-pulse-rate"></canvas>
+        </div>
+        <div class="glass-card" style="padding: 12px;">
+            <canvas id="chart-breathing-trace"></canvas>
+        </div>
+        <div class="glass-card" style="padding: 12px;">
+            <canvas id="chart-arterial-pressure"></canvas>
+        </div>
+    </div>
+
+    <script src="dist/renderer.bundle.js"></script>
 </body>
 </html>

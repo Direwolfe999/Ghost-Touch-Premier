@@ -83,7 +83,7 @@ function createWindow() {
     win.webContents.on('will-navigate', (event) => event.preventDefault());
 
     if (!app.isPackaged) {
-        win.loadURL('http://localhost:5173');
+        win.loadFile(path.join(__dirname, 'index.html'));
     } else {
         win.loadFile(path.join(__dirname, 'dist', 'index.html'));
     }

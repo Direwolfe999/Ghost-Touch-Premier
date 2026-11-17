@@ -49,7 +49,6 @@
     "files": [
       "main.cjs",
       "index.html",
-      "styles.css",
       "dist/**",
       "node_modules/**",
       "!node_modules/@smartspectra/node-sdk-*/**",
